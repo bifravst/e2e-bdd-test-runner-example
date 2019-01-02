@@ -9,8 +9,8 @@ In order to run the tests, set up the necessary AWS resources using the AWS CDK:
     npx cdk deploy   # deploy the stack to your AWS account
     npm test         # run the tests
 
-*Note: AWS CDK follows the AWS SDK way of authenticating. See [this guide](https://awslabs.github.io/aws-cdk/getting-started.html#configuring-the-cdk)    to learn more.*
+*Note: AWS CDK follows the AWS SDK way of authenticating. See [this guide](https://awslabs.github.io/aws-cdk/getting-started.html#configuring-the-cdk) to learn more.*
 
 ## Webhook receiver
 
-The [`Webhook.feature`](./features/Webhook.feature) shows how to use AWS ApiGateway, Lambda and SQS to set up a real test double for a webhook endpoint. It enables to test that a component which is supposed to send a webhook is actually sending it.
+The [`Webhook.feature`](./features/Webhook.feature) shows how to use AWS ApiGateway, Lambda and SQS to set up a real test double for a webhook endpoint. It allows to test that a component which is supposed to send a webhook is actually sending it.
