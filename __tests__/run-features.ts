@@ -1,10 +1,10 @@
 import {
-    FeatureRunner,
-    restStepRunners,
-    webhookStepRunners,
-    fetchStackConfiguration,
-    ConsoleReporter,
-} from '@coderbyheart/bdd-feature-runner-aws';
+	FeatureRunner,
+	restStepRunners,
+	webhookStepRunners,
+	fetchStackConfiguration,
+	ConsoleReporter,
+} from '@coderbyheart/bdd-feature-runner-aws'
 
 /**
  * This file configures the BDD Feature runner
@@ -14,43 +14,41 @@ import {
  */
 
 export type World = {
-    webhookReceiver: string;
-    webhookQueue: string;
-};
+	webhookReceiver: string
+	webhookQueue: string
+}
 
 const runFeatures = async () => {
-    const config = await fetchStackConfiguration(
-        'bdd-feature-runner-aws-example',
-    );
-    const runner = new FeatureRunner<World>(
-        {
-            webhookReceiver: config.ApiURL,
-            webhookQueue: config.QueueURL,
-        },
-        {
-            dir: './features',
-            reporters: [
-                new ConsoleReporter({
-                    printProgress: true,
-                    printResults: true,
-                }),
-            ],
-        },
-    );
+	const config = await fetchStackConfiguration('bdd-feature-runner-aws-example')
+	const runner = new FeatureRunner<World>(
+		{
+			webhookReceiver: config.ApiURL,
+			webhookQueue: config.QueueURL,
+		},
+		{
+			dir: './features',
+			reporters: [
+				new ConsoleReporter({
+					printProgress: true,
+					printResults: true,
+				}),
+			],
+		},
+	)
 
-    return runner
-        .addStepRunners(restStepRunners<World>())
-        .addStepRunners(webhookStepRunners<World>())
-        .run();
-};
+	return runner
+		.addStepRunners(restStepRunners<World>())
+		.addStepRunners(webhookStepRunners<World>())
+		.run()
+}
 
 runFeatures()
-    .then(({ success }) => {
-        if (!success) {
-            process.exit(1);
-        }
-    })
-    .catch(error => {
-        console.error(error);
-        process.exit(1);
-    });
+	.then(({ success }) => {
+		if (!success) {
+			process.exit(1)
+		}
+	})
+	.catch(error => {
+		console.error(error)
+		process.exit(1)
+	})
