@@ -41,17 +41,25 @@
     "@types/node": "^12.0.10",
     "aws-cdk": "^0.35.0",
     "husky": "^2.4.1",
+    "lint-staged": "^8.2.1",
     "prettier": "^1.18.2",
     "tslint": "^5.18.0",
     "typescript": "^3.5.2"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint",
+      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -e"
     }
   },
   "dependencies": {
     "@coderbyheart/bdd-feature-runner-aws": "^1.6.3"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "tslint --project ./tsconfig.json --fix",
+      "prettier --write",
+      "git add"
+    ]
   }
 }
