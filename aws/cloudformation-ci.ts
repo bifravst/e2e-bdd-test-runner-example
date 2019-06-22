@@ -1,4 +1,4 @@
-import { App, Stack } from '@aws-cdk/cdk';
+import { App, Stack, PhysicalName } from '@aws-cdk/cdk';
 import { readFileSync } from 'fs';
 import * as path from 'path';
 import {
@@ -7,8 +7,13 @@ import {
     Role,
     ServicePrincipal,
 } from '@aws-cdk/aws-iam';
-import * as codebuild from '@aws-cdk/aws-codebuild';
-import { BuildEnvironmentVariableType } from '@aws-cdk/aws-codebuild';
+import {
+    BuildEnvironmentVariableType,
+    Project,
+    ComputeType,
+    LinuxBuildImage,
+    Source,
+} from '@aws-cdk/aws-codebuild';
 import { parse } from 'url';
 
 /**
@@ -48,9 +53,10 @@ export class CI extends Stack {
             }),
         );
 
-        new codebuild.Project(this, 'CodeBuildProject', {
+        new Project(this, 'CodeBuildProject', {
+            projectName: PhysicalName.of(id),
             description: `This project sets up the continuous integration of the BDD Feature Runner AWS example project`,
-            source: codebuild.Source.gitHub({
+            source: Source.gitHub({
                 cloneDepth: 25,
                 repo: Repo,
                 owner: Owner,
@@ -58,8 +64,8 @@ export class CI extends Stack {
                 webhook: true,
             }),
             environment: {
-                computeType: codebuild.ComputeType.Large,
-                buildImage: codebuild.LinuxBuildImage.STANDARD_2_0,
+                computeType: ComputeType.Large,
+                buildImage: LinuxBuildImage.STANDARD_2_0,
                 environmentVariables: {
                     GH_USERNAME: {
                         value: '/codebuild/github-username',
