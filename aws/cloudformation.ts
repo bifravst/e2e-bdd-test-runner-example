@@ -82,4 +82,4 @@ class TestApp extends App {
     }
 }
 
-new TestApp().run();
+new TestApp().synth();

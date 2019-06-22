@@ -1,0 +1,27 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      - echo "updating git ..."; apt-get update; apt-get install -y python-software-properties software-properties-common; add-apt-repository ppa:git-core/ppa; apt-get update; apt-get install -y git
+      - echo "machine github.com login ${GH_USERNAME} password ${GH_TOKEN}" > ~/.netrc
+      - npm install -g npm@
+      - npm whoami
+      - export GK_LOCK_DEFAULT_BRANCH=saga
+      - npm i -g greenkeeper-lockfile@2
+      - npx greenkeeper-lockfile-update
+      - npm ci --no-audit
+  pre_build:
+    commands:
+      - npm run lint
+      - npx tsc
+      - npx cdk deploy
+  build:
+    commands:
+      - npm test
+      - npx greenkeeper-lockfile-upload
+      - npm i semantic-release; npx semantic-release || true
+  post_build:
+    commands:
+      - npx cdk destroy -f
