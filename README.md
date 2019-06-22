@@ -1,5 +1,7 @@
 # BDD Feature Runner for AWS Examples
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/coderbyheart/bdd-feature-runner-aws-example.svg)](https://greenkeeper.io/)
+
 ![Build Status](https://codebuild.eu-west-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiUTZWUlF6bXlJcFZEY2t2ZFdQMnAyZlhvWnB2aWhQQjdld1FBaEFyMitOYkYyNzYvSjhwaXVGRWNWSmdCQ29UZUdRb1N6SUw4NWtJWlNLNHY0UzlQUjQ0PSIsIml2UGFyYW1ldGVyU3BlYyI6IjBSUnpNQnp2bUtXdFJOUmEiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=saga)
 
 Example use of [@nRFCloud/bdd-feature-runner-aws](https://github.com/nRFCloud/bdd-feature-runner-aws).
