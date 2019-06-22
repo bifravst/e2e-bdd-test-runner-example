@@ -15,7 +15,7 @@ phases:
     commands:
       - npm run lint
       - npx tsc
-      - npx cdk deploy
+      - npx cdk deploy --require-approval never
   build:
     commands:
       - npm test
