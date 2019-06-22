@@ -63,6 +63,7 @@ export class CI extends Stack {
                 reportBuildStatus: true,
                 webhook: true,
             }),
+            badge: true,
             environment: {
                 computeType: ComputeType.Large,
                 buildImage: LinuxBuildImage.STANDARD_2_0,
