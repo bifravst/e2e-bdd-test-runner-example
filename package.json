@@ -56,7 +56,7 @@
     }
   },
   "dependencies": {
-    "@coderbyheart/bdd-feature-runner-aws": "^1.6.3"
+    "@coderbyheart/bdd-feature-runner-aws": "^1.6.4"
   },
   "lint-staged": {
     "*.ts": [
