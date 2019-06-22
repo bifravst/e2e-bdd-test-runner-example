@@ -4,7 +4,7 @@ import {
     webhookStepRunners,
     fetchStackConfiguration,
     ConsoleReporter,
-} from '@nrfcloud/bdd-feature-runner-aws';
+} from '@coderbyheart/bdd-feature-runner-aws';
 
 /**
  * This file configures the BDD Feature runner
@@ -18,7 +18,7 @@ export type World = {
     webhookQueue: string;
 };
 
-(async () => {
+const runFeatures = async () => {
     const config = await fetchStackConfiguration(
         'bdd-feature-runner-aws-example',
     );
@@ -38,13 +38,19 @@ export type World = {
         },
     );
 
-    runner
+    return runner
         .addStepRunners(restStepRunners<World>())
         .addStepRunners(webhookStepRunners<World>())
-        .run()
-        .then(({ success }) => {
-            if (!success) {
-                process.exit(1);
-            }
-        });
-})();
+        .run();
+};
+
+runFeatures()
+    .then(({ success }) => {
+        if (!success) {
+            process.exit(1);
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        process.exit(1);
+    });

@@ -1,13 +1,9 @@
-import { App, Stack, Output } from '@aws-cdk/cdk';
-import {
-    PolicyStatement,
-    PolicyStatementEffect,
-    ServicePrincipal,
-} from '@aws-cdk/aws-iam';
+import { App, CfnOutput, RemovalPolicy, Stack } from '@aws-cdk/cdk';
+import { PolicyStatement, ServicePrincipal } from '@aws-cdk/aws-iam';
 import { Queue } from '@aws-cdk/aws-sqs';
 import { LogGroup } from '@aws-cdk/aws-logs';
-import { RestApi, LambdaIntegration } from '@aws-cdk/aws-apigateway';
-import { Code, Runtime, Function } from '@aws-cdk/aws-lambda';
+import { LambdaIntegration, RestApi } from '@aws-cdk/aws-apigateway';
+import { Code, Function, Runtime } from '@aws-cdk/aws-lambda';
 import { readFileSync } from 'fs';
 
 /**
@@ -28,17 +24,21 @@ export class WebhookReceiver extends Stack {
             description: 'Publishes webhook requests into SQS',
             code: Code.inline(readFileSync('./aws/lambda.js').toString()),
             handler: 'index.handler',
-            runtime: Runtime.NodeJS810,
+            runtime: Runtime.Nodejs10x,
             timeout: 15,
             initialPolicy: [
-                new PolicyStatement(PolicyStatementEffect.Allow)
-                    .addResource('arn:aws:logs:*:*:*')
-                    .addAction('logs:CreateLogGroup')
-                    .addAction('logs:CreateLogStream')
-                    .addAction('logs:PutLogEvents'),
-                new PolicyStatement(PolicyStatementEffect.Allow)
-                    .addResource(queue.queueArn)
-                    .addAction('sqs:SendMessage'),
+                new PolicyStatement({
+                    resources: ['arn:aws:logs:*:*:*'],
+                    actions: [
+                        'logs:CreateLogGroup',
+                        'logs:CreateLogStream',
+                        'logs:PutLogEvents',
+                    ],
+                }),
+                new PolicyStatement({
+                    resources: [queue.queueArn],
+                    actions: ['sqs:SendMessage'],
+                }),
             ],
             environment: {
                 SQS_QUEUE: queue.queueUrl,
@@ -46,7 +46,7 @@ export class WebhookReceiver extends Stack {
         });
         // Create the log group here, so we can control the retention
         new LogGroup(this, `LambdaLogGroup`, {
-            retainLogGroup: false,
+            removalPolicy: RemovalPolicy.Destroy,
             logGroupName: `/aws/lambda/${lambda.functionName}`,
             retentionDays: 1,
         });
@@ -61,16 +61,16 @@ export class WebhookReceiver extends Stack {
         // API Gateway needs to be able to call the lambda
         lambda.addPermission('InvokeByApiGateway', {
             principal: new ServicePrincipal('apigateway.amazonaws.com'),
-            sourceArn: api.executeApiArn(),
+            sourceArn: api.arnForExecuteApi(),
         });
         // Export these so the test runner can use them
-        new Output(this, 'ApiURL', {
+        new CfnOutput(this, 'ApiURL', {
             value: api.url,
-            export: `${this.name}:ApiURL`,
+            export: `${this.stackName}:ApiURL`,
         });
-        new Output(this, 'QueueURL', {
+        new CfnOutput(this, 'QueueURL', {
             value: queue.queueUrl,
-            export: `${this.name}:QueueURL`,
+            export: `${this.stackName}:QueueURL`,
         });
     }
 }
