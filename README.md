@@ -17,6 +17,9 @@ The [`Webhook.feature`](./features/Webhook.feature) shows how to use AWS ApiGate
 
 ## Set up CI
 
+> Note that you need to give CodeBuild permissions to your GitHub account in order for the token to work.
+> That is a one-time operation that can be done through the AWS Console for CodeBuild.
+
     aws ssm put-parameter --name /codebuild/github-token --type String --value <Github Token>
     aws ssm put-parameter --name /codebuild/github-username --type String --value <Github Username>
     npx cdk -a 'node dist/aws/cloudformation-ci.js' deploy
