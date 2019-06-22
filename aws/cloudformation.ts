@@ -24,7 +24,7 @@ export class WebhookReceiver extends Stack {
             description: 'Publishes webhook requests into SQS',
             code: Code.inline(readFileSync('./aws/lambda.js').toString()),
             handler: 'index.handler',
-            runtime: Runtime.Nodejs10x,
+            runtime: Runtime.Nodejs810,
             timeout: 15,
             initialPolicy: [
                 new PolicyStatement({
