@@ -16,8 +16,6 @@ import {
 } from '@aws-cdk/aws-codebuild'
 import { parse } from 'url'
 
-const STACK_ID = process.env.STACK_ID || 'bdd-feature-runner-aws-ci'
-
 /**
  * This is the CloudFormation stack sets up the continuous integration of the projec.
  */
@@ -100,7 +98,7 @@ class CIApp extends App {
 		const Owner = repoUrl.path!.split('/')[1]
 		const Repo = repoUrl.path!.split('/')[2]
 
-		new CI(this, STACK_ID, {
+		new CI(this, 'bdd-feature-runner-aws-ci', {
 			Owner,
 			Repo,
 		})

@@ -6,6 +6,8 @@ import { LambdaIntegration, RestApi } from '@aws-cdk/aws-apigateway'
 import { Code, Function, Runtime } from '@aws-cdk/aws-lambda'
 import { readFileSync } from 'fs'
 
+const STACK_ID = process.env.STACK_ID || 'bdd-feature-runner-aws-example'
+
 /**
  * This is the CloudFormation stack which contains the webhook receiver resources.
  */
@@ -78,7 +80,7 @@ export class WebhookReceiver extends Stack {
 class TestApp extends App {
 	constructor() {
 		super()
-		new WebhookReceiver(this, 'bdd-feature-runner-aws-example')
+		new WebhookReceiver(this, STACK_ID)
 	}
 }
 

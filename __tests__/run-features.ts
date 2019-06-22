@@ -6,6 +6,8 @@ import {
 	ConsoleReporter,
 } from '@coderbyheart/bdd-feature-runner-aws'
 
+const STACK_ID = process.env.STACK_ID || 'bdd-feature-runner-aws-example'
+
 /**
  * This file configures the BDD Feature runner
  * by loading the configuration for the test resources
@@ -19,7 +21,7 @@ export type World = {
 }
 
 const runFeatures = async () => {
-	const config = await fetchStackConfiguration('bdd-feature-runner-aws-example')
+	const config = await fetchStackConfiguration(STACK_ID)
 	const runner = new FeatureRunner<World>(
 		{
 			webhookReceiver: config.ApiURL,
