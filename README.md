@@ -23,12 +23,38 @@ ApiGateway, Lambda and SQS to set up a real test double for a webhook endpoint.
 It allows to test that a component which is supposed to send a webhook is
 actually sending it.
 
-## Set up CI
+## Set up CI/CD
 
-> Note that you need to give CodeBuild permissions to your GitHub account in
-> order for the token to work. That is a one-time operation that can be done
-> through the AWS Console for CodeBuild.
+You need to create a
+[developer token](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line)
+with `repo` and `admin:repo_hook` permissions for an account that has write
+permissions to your repository.
+
+You need to store this token in AWS ParameterStore which is a **one-time**
+manual step done through the AWS CLI:
 
     aws ssm put-parameter --name /codebuild/github-token --type String --value <Github Token>
     aws ssm put-parameter --name /codebuild/github-username --type String --value <Github Username>
+
+### CI
+
+> Note that you need to give CodeBuild permissions to your GitHub account in
+> order for it to be able to set up the necessary webhooks. That is a one-time
+> operation that can be done through the AWS CLI:
+
+    aws codebuild import-source-credentials \
+      --cli-input-json \
+      '{"serverType":"GITHUB",\
+      "authType":"PERSONAL_ACCESS_TOKEN",\
+      "token":"<Github Token>",\
+      "username":"<Github Username>"}'
+
+Set up the continuous integration:
+
     npx cdk -a 'node dist/aws/cloudformation-ci.js' deploy
+
+### CD
+
+Set up the continuous deployment:
+
+    npx cdk -a 'node dist/aws/cloudformation-cd.js' deploy
