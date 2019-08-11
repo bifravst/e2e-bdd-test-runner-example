@@ -1,7 +1,7 @@
-import { App } from '@aws-cdk/core'
+import * as CDK from '@aws-cdk/core'
 import { CIStack } from './CIStack'
 
-export class CIApp extends App {
+export class CIApp extends CDK.App {
 	public constructor({
 		stackId,
 		repoToWatch: { Owner, Repo },

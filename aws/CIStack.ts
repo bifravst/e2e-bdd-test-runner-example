@@ -1,24 +1,13 @@
-import { App, Stack } from '@aws-cdk/core'
-import {
-	PolicyDocument,
-	PolicyStatement,
-	Role,
-	ServicePrincipal,
-} from '@aws-cdk/aws-iam'
-import {
-	BuildEnvironmentVariableType,
-	ComputeType,
-	LinuxBuildImage,
-	Project,
-	Source,
-} from '@aws-cdk/aws-codebuild'
+import * as CDK from '@aws-cdk/core'
+import * as IAM from '@aws-cdk/aws-iam'
+import * as CodeBuild from '@aws-cdk/aws-codebuild'
 
 /**
  * This is the CloudFormation stack sets up the continuous integration of the projec.
  */
-export class CIStack extends Stack {
+export class CIStack extends CDK.Stack {
 	public constructor(
-		parent: App,
+		parent: CDK.App,
 		id: string,
 		properties: {
 			Repo: string
@@ -29,12 +18,12 @@ export class CIStack extends Stack {
 
 		const { Repo, Owner } = properties
 
-		const codeBuildRole = new Role(this, 'CodeBuildRole', {
-			assumedBy: new ServicePrincipal('codebuild.amazonaws.com'),
+		const codeBuildRole = new IAM.Role(this, 'CodeBuildRole', {
+			assumedBy: new IAM.ServicePrincipal('codebuild.amazonaws.com'),
 			inlinePolicies: {
-				rootPermissions: new PolicyDocument({
+				rootPermissions: new IAM.PolicyDocument({
 					statements: [
-						new PolicyStatement({
+						new IAM.PolicyStatement({
 							resources: ['*'],
 							actions: ['*'],
 						}),
@@ -44,16 +33,16 @@ export class CIStack extends Stack {
 		})
 
 		codeBuildRole.addToPolicy(
-			new PolicyStatement({
+			new IAM.PolicyStatement({
 				resources: [codeBuildRole.roleArn],
 				actions: ['iam:PassRole', 'iam:GetRole'],
 			}),
 		)
 
-		new Project(this, 'CodeBuildProject', {
+		new CodeBuild.Project(this, 'CodeBuildProject', {
 			projectName: id,
 			description: `This project sets up the continuous integration of the BDD Feature Runner AWS example project`,
-			source: Source.gitHub({
+			source: CodeBuild.Source.gitHub({
 				cloneDepth: 25,
 				repo: Repo,
 				owner: Owner,
@@ -62,20 +51,20 @@ export class CIStack extends Stack {
 			}),
 			badge: true,
 			environment: {
-				computeType: ComputeType.LARGE,
-				buildImage: LinuxBuildImage.STANDARD_2_0,
+				computeType: CodeBuild.ComputeType.LARGE,
+				buildImage: CodeBuild.LinuxBuildImage.STANDARD_2_0,
 				environmentVariables: {
 					GH_USERNAME: {
 						value: '/codebuild/github-username',
-						type: BuildEnvironmentVariableType.PARAMETER_STORE,
+						type: CodeBuild.BuildEnvironmentVariableType.PARAMETER_STORE,
 					},
 					GH_TOKEN: {
 						value: '/codebuild/github-token',
-						type: BuildEnvironmentVariableType.PARAMETER_STORE,
+						type: CodeBuild.BuildEnvironmentVariableType.PARAMETER_STORE,
 					},
 					AWS_REGION: {
 						value: this.region.toString(),
-						type: BuildEnvironmentVariableType.PLAINTEXT,
+						type: CodeBuild.BuildEnvironmentVariableType.PLAINTEXT,
 					},
 				},
 			},
