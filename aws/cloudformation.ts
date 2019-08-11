@@ -12,7 +12,7 @@ const STACK_ID = process.env.STACK_ID || 'bdd-feature-runner-aws-example'
  * This is the CloudFormation stack which contains the webhook receiver resources.
  */
 export class WebhookReceiver extends Stack {
-	constructor(parent: App, id: string) {
+	public constructor(parent: App, id: string) {
 		super(parent, id)
 
 		// This queue will store all the requests made to the API Gateway
@@ -78,7 +78,7 @@ export class WebhookReceiver extends Stack {
 }
 
 class TestApp extends App {
-	constructor() {
+	public constructor() {
 		super()
 		new WebhookReceiver(this, STACK_ID)
 	}

@@ -20,7 +20,7 @@ import { parse } from 'url'
  * This is the CloudFormation stack sets up the continuous integration of the projec.
  */
 export class CI extends Stack {
-	constructor(
+	public constructor(
 		parent: App,
 		id: string,
 		properties: {
@@ -88,15 +88,15 @@ export class CI extends Stack {
 }
 
 class CIApp extends App {
-	constructor() {
+	public constructor() {
 		super()
 
 		const pjson = JSON.parse(
 			readFileSync(path.join(__dirname, '..', '..', 'package.json'), 'utf-8'),
 		)
 		const repoUrl = parse(pjson.homepage)
-		const Owner = repoUrl.path!.split('/')[1]
-		const Repo = repoUrl.path!.split('/')[2]
+		const Owner = repoUrl.path.split('/')[1]
+		const Repo = repoUrl.path.split('/')[2]
 
 		new CI(this, 'bdd-feature-runner-aws-ci', {
 			Owner,

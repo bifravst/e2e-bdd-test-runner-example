@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "node dist/__tests__/run-features.js",
-    "prettier": "prettier --write \"./**/*.ts\"",
-    "prettier:lint": "prettier --list-different \"./**/*.ts\"",
+    "prettier": "prettier --write \"./**/*.{ts,js,json}\"",
+    "prettier:lint": "prettier --list-different \"./**/*.{ts,js,json}\"",
     "lint": "npm run tslint && npm run prettier:lint",
-    "tslint": "tslint --project ./tsconfig.json"
+    "tslint": "eslint --ext .js,.ts \"./**/*.ts\""
   },
   "repository": {
     "type": "git",
@@ -38,15 +38,12 @@
     "@aws-cdk/aws-sqs": "^1.3.0",
     "@aws-cdk/aws-ssm": "^1.3.0",
     "@aws-cdk/core": "^1.3.0",
+    "@bifravst/code-style": "^2.0.0",
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-angular": "^8.1.0",
-    "@nrfcloud/tslint-config": "^3.10.0",
     "@types/node": "^12.7.1",
     "aws-cdk": "^1.3.0",
     "husky": "^3.0.3",
-    "lint-staged": "^9.2.1",
-    "prettier": "^1.18.2",
-    "tslint": "^5.18.0",
     "typescript": "^3.5.3"
   },
   "husky": {
@@ -60,7 +57,11 @@
   },
   "lint-staged": {
     "*.ts": [
-      "tslint --project ./tsconfig.json --fix",
+      "prettier --write",
+      "eslint --ext .js,.ts",
+      "git add"
+    ],
+    "*.{md,json,yaml,yml,js}": [
       "prettier --write",
       "git add"
     ]
