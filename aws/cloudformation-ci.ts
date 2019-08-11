@@ -1,108 +1,26 @@
-import { App, Stack } from '@aws-cdk/core'
 import { readFileSync } from 'fs'
 import * as path from 'path'
-import {
-	PolicyDocument,
-	PolicyStatement,
-	Role,
-	ServicePrincipal,
-} from '@aws-cdk/aws-iam'
-import {
-	BuildEnvironmentVariableType,
-	Project,
-	ComputeType,
-	LinuxBuildImage,
-	Source,
-} from '@aws-cdk/aws-codebuild'
 import { parse } from 'url'
+import { CIApp } from './CIApp'
 
-/**
- * This is the CloudFormation stack sets up the continuous integration of the projec.
- */
-export class CI extends Stack {
-	public constructor(
-		parent: App,
-		id: string,
-		properties: {
-			Repo: string
-			Owner: string
-		},
-	) {
-		super(parent, id)
+const STACK_ID = process.env.STACK_ID || 'bdd-feature-runner-aws-ci'
 
-		const { Repo, Owner } = properties
-
-		const codeBuildRole = new Role(this, 'CodeBuildRole', {
-			assumedBy: new ServicePrincipal('codebuild.amazonaws.com'),
-			inlinePolicies: {
-				rootPermissions: new PolicyDocument({
-					statements: [
-						new PolicyStatement({
-							resources: ['*'],
-							actions: ['*'],
-						}),
-					],
-				}),
-			},
-		})
-
-		codeBuildRole.addToPolicy(
-			new PolicyStatement({
-				resources: [codeBuildRole.roleArn],
-				actions: ['iam:PassRole', 'iam:GetRole'],
-			}),
-		)
-
-		new Project(this, 'CodeBuildProject', {
-			projectName: id,
-			description: `This project sets up the continuous integration of the BDD Feature Runner AWS example project`,
-			source: Source.gitHub({
-				cloneDepth: 25,
-				repo: Repo,
-				owner: Owner,
-				reportBuildStatus: true,
-				webhook: true,
-			}),
-			badge: true,
-			environment: {
-				computeType: ComputeType.LARGE,
-				buildImage: LinuxBuildImage.STANDARD_2_0,
-				environmentVariables: {
-					GH_USERNAME: {
-						value: '/codebuild/github-username',
-						type: BuildEnvironmentVariableType.PARAMETER_STORE,
-					},
-					GH_TOKEN: {
-						value: '/codebuild/github-token',
-						type: BuildEnvironmentVariableType.PARAMETER_STORE,
-					},
-					AWS_REGION: {
-						value: this.region.toString(),
-						type: BuildEnvironmentVariableType.PLAINTEXT,
-					},
-				},
-			},
-			role: codeBuildRole,
-		})
-	}
+const pjson = JSON.parse(
+	readFileSync(path.join(__dirname, '..', '..', 'package.json'), 'utf-8'),
+)
+const repoUrl = parse(pjson.homepage)
+if (!repoUrl.path) {
+	throw new Error(
+		`Failed to detect repository to watch from package.json:homepage: ${pjson.homepage}`,
+	)
 }
+const Owner = repoUrl.path.split('/')[1]
+const Repo = repoUrl.path.split('/')[2]
 
-class CIApp extends App {
-	public constructor() {
-		super()
-
-		const pjson = JSON.parse(
-			readFileSync(path.join(__dirname, '..', '..', 'package.json'), 'utf-8'),
-		)
-		const repoUrl = parse(pjson.homepage)
-		const Owner = repoUrl.path.split('/')[1]
-		const Repo = repoUrl.path.split('/')[2]
-
-		new CI(this, 'bdd-feature-runner-aws-ci', {
-			Owner,
-			Repo,
-		})
-	}
-}
-
-new CIApp().synth()
+new CIApp({
+	stackId: STACK_ID,
+	repoToWatch: {
+		Owner,
+		Repo,
+	},
+}).synth()
