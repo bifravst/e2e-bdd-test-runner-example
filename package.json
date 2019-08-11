@@ -8,7 +8,8 @@
     "prettier": "prettier --write \"./**/*.{ts,js,json}\"",
     "prettier:lint": "prettier --list-different \"./**/*.{ts,js,json}\"",
     "lint": "npm run tslint && npm run prettier:lint",
-    "tslint": "eslint --ext .js,.ts \"./**/*.ts\""
+    "tslint": "eslint --ext .js,.ts \"./**/*.ts\"",
+    "postinstall": "npx tsc"
   },
   "repository": {
     "type": "git",
@@ -38,7 +39,7 @@
     "@aws-cdk/aws-sqs": "^1.3.0",
     "@aws-cdk/aws-ssm": "^1.3.0",
     "@aws-cdk/core": "^1.3.0",
-    "@bifravst/code-style": "^2.1.0",
+    "@bifravst/code-style": "^2.1.1",
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-angular": "^8.1.0",
     "@types/node": "^12.7.1",

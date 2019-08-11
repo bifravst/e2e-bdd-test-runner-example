@@ -30,7 +30,7 @@ export class WebhookReceiverStack extends Stack {
 				).toString(),
 			),
 			handler: 'index.handler',
-			runtime: Runtime.NODEJS_10_X,
+			runtime: Runtime.NODEJS_8_10,
 			timeout: Duration.seconds(15),
 			initialPolicy: [
 				new PolicyStatement({

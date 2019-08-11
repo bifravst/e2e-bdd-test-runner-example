@@ -5,8 +5,7 @@ import {
 	fetchStackConfiguration,
 	ConsoleReporter,
 } from '@coderbyheart/bdd-feature-runner-aws'
-
-const STACK_ID = process.env.STACK_ID || 'bdd-feature-runner-aws-example'
+import { stackBaseName } from '../aws/stackBaseName'
 
 /**
  * This file configures the BDD Feature runner
@@ -21,7 +20,7 @@ export type World = {
 }
 
 const runFeatures = async () => {
-	const config = await fetchStackConfiguration(STACK_ID)
+	const config = await fetchStackConfiguration(`${stackBaseName()}-test`)
 	const runner = new FeatureRunner<World>(
 		{
 			webhookReceiver: config.ApiURL,

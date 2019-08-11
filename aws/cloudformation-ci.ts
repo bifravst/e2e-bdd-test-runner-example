@@ -2,8 +2,7 @@ import { readFileSync } from 'fs'
 import * as path from 'path'
 import { parse } from 'url'
 import { CIApp } from './CIApp'
-
-const STACK_ID = process.env.STACK_ID || 'bdd-feature-runner-aws-ci'
+import { stackBaseName } from './stackBaseName'
 
 const pjson = JSON.parse(
 	readFileSync(path.join(__dirname, '..', '..', 'package.json'), 'utf-8'),
@@ -18,7 +17,7 @@ const Owner = repoUrl.path.split('/')[1]
 const Repo = repoUrl.path.split('/')[2]
 
 new CIApp({
-	stackId: STACK_ID,
+	stackId: `${stackBaseName()}-ci`,
 	repoToWatch: {
 		Owner,
 		Repo,

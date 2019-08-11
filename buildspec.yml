@@ -15,7 +15,7 @@ phases:
     commands:
       - npm run lint
       - npx tsc
-      - export STACK_ID=bdd-feature-runner-aws-example-test-$(node -e 'process.stdout.write(Math.random().toString(36).replace(/[^a-z]+/g, ""))')
+      - export STACK_BASE_NAME=bdd-feature-runner-aws-example-$(node -e 'process.stdout.write(Math.random().toString(36).replace(/[^a-z]+/g, ""))')
       - npx cdk deploy --require-approval never
   build:
     commands:
