@@ -1,4 +1,4 @@
-import { App, Stack, PhysicalName } from '@aws-cdk/cdk'
+import { App, Stack } from '@aws-cdk/core'
 import { readFileSync } from 'fs'
 import * as path from 'path'
 import {
@@ -54,7 +54,7 @@ export class CI extends Stack {
 		)
 
 		new Project(this, 'CodeBuildProject', {
-			projectName: PhysicalName.of(id),
+			projectName: id,
 			description: `This project sets up the continuous integration of the BDD Feature Runner AWS example project`,
 			source: Source.gitHub({
 				cloneDepth: 25,
@@ -65,20 +65,20 @@ export class CI extends Stack {
 			}),
 			badge: true,
 			environment: {
-				computeType: ComputeType.Large,
+				computeType: ComputeType.LARGE,
 				buildImage: LinuxBuildImage.STANDARD_2_0,
 				environmentVariables: {
 					GH_USERNAME: {
 						value: '/codebuild/github-username',
-						type: BuildEnvironmentVariableType.ParameterStore,
+						type: BuildEnvironmentVariableType.PARAMETER_STORE,
 					},
 					GH_TOKEN: {
 						value: '/codebuild/github-token',
-						type: BuildEnvironmentVariableType.ParameterStore,
+						type: BuildEnvironmentVariableType.PARAMETER_STORE,
 					},
 					AWS_REGION: {
 						value: this.region.toString(),
-						type: BuildEnvironmentVariableType.PlainText,
+						type: BuildEnvironmentVariableType.PLAINTEXT,
 					},
 				},
 			},

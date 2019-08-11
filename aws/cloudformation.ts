@@ -1,7 +1,7 @@
-import { App, CfnOutput, RemovalPolicy, Stack } from '@aws-cdk/cdk'
+import { App, CfnOutput, Duration, RemovalPolicy, Stack } from '@aws-cdk/core'
 import { PolicyStatement, ServicePrincipal } from '@aws-cdk/aws-iam'
 import { Queue } from '@aws-cdk/aws-sqs'
-import { LogGroup } from '@aws-cdk/aws-logs'
+import { LogGroup, RetentionDays } from '@aws-cdk/aws-logs'
 import { LambdaIntegration, RestApi } from '@aws-cdk/aws-apigateway'
 import { Code, Function, Runtime } from '@aws-cdk/aws-lambda'
 import { readFileSync } from 'fs'
@@ -18,7 +18,7 @@ export class WebhookReceiver extends Stack {
 		// This queue will store all the requests made to the API Gateway
 		const queue = new Queue(this, 'queue', {
 			fifo: true,
-			visibilityTimeoutSec: 5,
+			visibilityTimeout: Duration.seconds(5),
 		})
 
 		// This lambda will publish all requests made to the API Gateway in the queue
@@ -26,8 +26,8 @@ export class WebhookReceiver extends Stack {
 			description: 'Publishes webhook requests into SQS',
 			code: Code.inline(readFileSync('./aws/lambda.js').toString()),
 			handler: 'index.handler',
-			runtime: Runtime.Nodejs810,
-			timeout: 15,
+			runtime: Runtime.NODEJS_10_X,
+			timeout: Duration.seconds(15),
 			initialPolicy: [
 				new PolicyStatement({
 					resources: ['arn:aws:logs:*:*:*'],
@@ -48,9 +48,9 @@ export class WebhookReceiver extends Stack {
 		})
 		// Create the log group here, so we can control the retention
 		new LogGroup(this, `LambdaLogGroup`, {
-			removalPolicy: RemovalPolicy.Destroy,
+			removalPolicy: RemovalPolicy.DESTROY,
 			logGroupName: `/aws/lambda/${lambda.functionName}`,
-			retentionDays: 1,
+			retention: RetentionDays.ONE_DAY,
 		})
 
 		// This is the API Gateway, AWS CDK automatically creates a prod stage and deployment
@@ -68,11 +68,11 @@ export class WebhookReceiver extends Stack {
 		// Export these so the test runner can use them
 		new CfnOutput(this, 'ApiURL', {
 			value: api.url,
-			export: `${this.stackName}:ApiURL`,
+			exportName: `${this.stackName}:ApiURL`,
 		})
 		new CfnOutput(this, 'QueueURL', {
 			value: queue.queueUrl,
-			export: `${this.stackName}:QueueURL`,
+			exportName: `${this.stackName}:QueueURL`,
 		})
 	}
 }
