@@ -7,6 +7,9 @@ import {
 } from '@coderbyheart/bdd-feature-runner-aws'
 import { stackBaseName } from '../aws/stackBaseName'
 
+const region =
+	process.env.AWS_DEFAULT_REGION || process.env.AWS_REGION || 'eu-central-1'
+
 /**
  * This file configures the BDD Feature runner
  * by loading the configuration for the test resources
@@ -20,7 +23,10 @@ export type World = {
 }
 
 const runFeatures = async () => {
-	const config = await fetchStackConfiguration(`${stackBaseName()}-test`)
+	const config = await fetchStackConfiguration({
+		StackName: `${stackBaseName()}-test`,
+		region,
+	})
 	const runner = new FeatureRunner<World>(
 		{
 			webhookReceiver: config.ApiURL,
@@ -38,7 +44,7 @@ const runFeatures = async () => {
 	)
 
 	return runner
-		.addStepRunners(restStepRunners<World>())
+		.addStepRunners(restStepRunners())
 		.addStepRunners(webhookStepRunners<World>())
 		.run()
 }
