@@ -1,6 +1,5 @@
 # BDD Feature Runner for AWS Examples
 
-![Build Status](https://codebuild.eu-west-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiUTZWUlF6bXlJcFZEY2t2ZFdQMnAyZlhvWnB2aWhQQjdld1FBaEFyMitOYkYyNzYvSjhwaXVGRWNWSmdCQ29UZUdRb1N6SUw4NWtJWlNLNHY0UzlQUjQ0PSIsIml2UGFyYW1ldGVyU3BlYyI6IjBSUnpNQnp2bUtXdFJOUmEiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=saga)
 [![Greenkeeper badge](https://badges.greenkeeper.io/coderbyheart/bdd-feature-runner-aws-example.svg)](https://greenkeeper.io/)
 
 Example use of
@@ -37,23 +36,6 @@ manual step done through the AWS CLI:
 
     aws ssm put-parameter --name /codebuild/github-token --type String --value <Github Token>
     aws ssm put-parameter --name /codebuild/github-username --type String --value <Github Username>
-
-### CI
-
-> Note that you need to give CodeBuild permissions to your GitHub account in
-> order for it to be able to set up the necessary webhooks. That is a one-time
-> operation that can be done through the AWS CLI:
-
-    aws codebuild import-source-credentials \
-      --cli-input-json \
-      '{"serverType":"GITHUB",\
-      "authType":"PERSONAL_ACCESS_TOKEN",\
-      "token":"<Github Token>",\
-      "username":"<Github Username>"}'
-
-Set up the continuous integration:
-
-    npx cdk -a 'node dist/aws/cloudformation-ci.js' deploy
 
 ### CD
 

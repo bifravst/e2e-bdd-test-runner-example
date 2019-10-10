@@ -1,0 +1,50 @@
+name: Test and Release
+
+on: push
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: eu-central-1
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - name: Install latest npm
+        run: |
+          sudo npm install -g npm@
+          npm config set update-notifier false
+          sudo chown -R $USER:$(id -gn $USER) /home/runner/.config
+      - name: Authenticate with GitHub registry
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN" > ~/.npmrc
+      - name: Install dependencies
+        run: npm ci --no-audit
+      - name: Build
+        run: npx tsc
+      - name: Lint
+        run: npm run lint
+      - name: Set up test resources
+        run: |
+          export STACK_BASE_NAME=bdd-feature-runner-aws-example-$(node -e
+          'process.stdout.write(Math.random().toString(36).replace(/[^a-z]+/g,
+          ""))')
+          npx cdk deploy --require-approval never
+      - name: Test
+        run: npm test
+      - name: Semantic release
+        if: success()
+        continue-on-error: true
+        run: |
+          npm i --no-save semantic-release@next
+          npx semantic-release
+      - name: Clean up End-to-End test resources
+        if: always()
+        run: npx cdk destroy -f
