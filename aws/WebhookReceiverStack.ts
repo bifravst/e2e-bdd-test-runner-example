@@ -18,6 +18,7 @@ export class WebhookReceiverStack extends CDK.Stack {
 		const queue = new SQS.Queue(this, 'queue', {
 			fifo: true,
 			visibilityTimeout: CDK.Duration.seconds(5),
+			queueName: `${id}.fifo`,
 		})
 
 		// This lambda will publish all requests made to the API Gateway in the queue
