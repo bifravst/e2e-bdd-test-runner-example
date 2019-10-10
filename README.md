@@ -29,7 +29,7 @@ ApiGateway, Lambda and SQS to set up a real test double for a webhook endpoint.
 It allows to test that a component which is supposed to send a webhook is
 actually sending it.
 
-## Set up CI/CD
+## Set up CD
 
 You need to create a
 [developer token](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line)
@@ -42,8 +42,6 @@ manual step done through the AWS CLI:
     aws ssm put-parameter --name /codebuild/github-token --type String --value <Github Token>
     aws ssm put-parameter --name /codebuild/github-username --type String --value <Github Username>
 
-### CD
-
-Set up the continuous deployment:
+Then set up the continuous deployment:
 
     npx cdk -a 'node dist/aws/cloudformation-cd.js' deploy
