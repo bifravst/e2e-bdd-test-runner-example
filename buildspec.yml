@@ -4,8 +4,12 @@ phases:
     runtime-versions:
       nodejs: 10
     commands:
-      - echo "updating git ..."; apt-get update; apt-get install -y python-software-properties software-properties-common; add-apt-repository ppa:git-core/ppa; apt-get update; apt-get install -y git
-      - echo "machine github.com login ${GH_USERNAME} password ${GH_TOKEN}" > ~/.netrc
+      - echo "updating git ..."; apt-get update; apt-get install -y
+        python-software-properties software-properties-common;
+        add-apt-repository ppa:git-core/ppa; apt-get update; apt-get install -y
+        git
+      - echo "machine github.com login unused password ${GH_TOKEN}" > ~/.netrc
+      - echo "//npm.pkg.github.com/:_authToken=${GH_TOKEN}" > ~/.npmrc
       - npm install -g npm@
       - export GK_LOCK_DEFAULT_BRANCH=saga
       - npm i -g greenkeeper-lockfile@2
@@ -15,7 +19,9 @@ phases:
     commands:
       - npm run lint
       - npx tsc
-      - export STACK_BASE_NAME=bdd-feature-runner-aws-example-$(node -e 'process.stdout.write(Math.random().toString(36).replace(/[^a-z]+/g, ""))')
+      - export STACK_BASE_NAME=bdd-feature-runner-aws-example-$(node -e
+        'process.stdout.write(Math.random().toString(36).replace(/[^a-z]+/g,
+        ""))')
       - npx cdk deploy --require-approval never
   build:
     commands:
