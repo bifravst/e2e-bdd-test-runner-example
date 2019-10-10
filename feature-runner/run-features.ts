@@ -6,6 +6,7 @@ import {
 	ConsoleReporter,
 } from '@coderbyheart/bdd-feature-runner-aws'
 import { stackBaseName } from '../aws/stackBaseName'
+import * as path from 'path'
 
 const region =
 	process.env.AWS_DEFAULT_REGION || process.env.AWS_REGION || 'eu-central-1'
@@ -33,7 +34,7 @@ const runFeatures = async () => {
 			webhookQueue: config.QueueURL,
 		},
 		{
-			dir: './features',
+			dir: path.resolve(process.cwd(), 'features'),
 			reporters: [
 				new ConsoleReporter({
 					printProgress: true,
