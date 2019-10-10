@@ -8,7 +8,7 @@
     "prettier": "prettier --write \"./**/*.{ts,js,json}\"",
     "prettier:lint": "prettier --list-different \"./**/*.{ts,js,json}\"",
     "lint": "npm run tslint && npm run prettier:lint",
-    "tslint": "eslint --ext .js,.ts \"./**/*.ts\"",
+    "tslint": "eslint --ext .js,.ts \"./{__tests__,aws}/*.ts\"",
     "postinstall": "npx tsc"
   },
   "repository": {
