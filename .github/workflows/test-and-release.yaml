@@ -7,6 +7,7 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: eu-central-1
+  STACK_BASE_NAME: bddfrawsx-${{ github.sha }}
 
 jobs:
   tests:
@@ -32,11 +33,7 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Set up test resources
-        run: |
-          export STACK_BASE_NAME=bdd-feature-runner-aws-example-$(node -e
-          'process.stdout.write(Math.random().toString(36).replace(/[^a-z]+/g,
-          ""))')
-          npx cdk deploy --require-approval never
+        run: npx cdk deploy --require-approval never
       - name: Test
         run: npm test
       - name: Semantic release
