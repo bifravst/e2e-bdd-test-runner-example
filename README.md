@@ -6,7 +6,9 @@
 Example use of
 [@coderbyheart/bdd-feature-runner-aws](https://github.com/coderbyheart/bdd-feature-runner-aws).
 
-In order to run the tests, set up the necessary AWS resources using the AWS CDK:
+In order to run the tests, set up the necessary AWS resources using the AWS CDK
+(remember to
+[authenticate against the GitHub package registry](https://help.github.com/en/articles/configuring-npm-for-use-with-github-package-registry#authenticating-to-github-package-registry)):
 
     npm ci           # install dependencies
     npx cdk deploy   # deploy the stack to your AWS account
