@@ -11,6 +11,9 @@ import * as path from 'path'
 const region =
 	process.env.AWS_DEFAULT_REGION || process.env.AWS_REGION || 'eu-central-1'
 
+const dir = path.resolve(process.cwd(), 'features')
+console.log(dir)
+
 /**
  * This file configures the BDD Feature runner
  * by loading the configuration for the test resources
@@ -34,7 +37,7 @@ const runFeatures = async () => {
 			webhookQueue: config.QueueURL,
 		},
 		{
-			dir: path.resolve(process.cwd(), 'features'),
+			dir,
 			reporters: [
 				new ConsoleReporter({
 					printProgress: true,
