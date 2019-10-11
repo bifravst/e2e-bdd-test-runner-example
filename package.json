@@ -1,6 +1,6 @@
 {
   "name": "@coderbyheart/bdd-feature-runner-aws-example",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "Example use of @nRFCloud/bdd-feature-runner-aws",
   "main": "index.js",
   "scripts": {
