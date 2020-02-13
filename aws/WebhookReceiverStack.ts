@@ -31,7 +31,7 @@ export class WebhookReceiverStack extends CDK.Stack {
 				).toString(),
 			),
 			handler: 'index.handler',
-			runtime: Lambda.Runtime.NODEJS_8_10,
+			runtime: Lambda.Runtime.NODEJS_12_X,
 			timeout: CDK.Duration.seconds(15),
 			initialPolicy: [
 				new IAM.PolicyStatement({
