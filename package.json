@@ -46,7 +46,8 @@
     "@commitlint/config-angular": "^8.3.4",
     "@types/node": "^13.7.1",
     "aws-cdk": "^1.23.0",
-    "husky": "^4.2.3"
+    "husky": "^4.2.3",
+    "typescript": "^3.7.5"
   },
   "husky": {
     "hooks": {

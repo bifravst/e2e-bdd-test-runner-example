@@ -46,7 +46,9 @@ const runFeatures = async () => {
 
 	return runner
 		.addStepRunners(restStepRunners())
-		.addStepRunners(webhookStepRunners<World>({ region }))
+		.addStepRunners(
+			webhookStepRunners<World>({ region }),
+		)
 		.run()
 }
 
