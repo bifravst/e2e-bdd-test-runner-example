@@ -30,23 +30,23 @@
   },
   "homepage": "https://github.com/coderbyheart/bdd-feature-runner-aws-example#readme",
   "devDependencies": {
-    "@aws-cdk/aws-apigateway": "^1.12.0",
-    "@aws-cdk/aws-codebuild": "^1.12.0",
-    "@aws-cdk/aws-codepipeline": "^1.12.0",
-    "@aws-cdk/aws-iam": "^1.12.0",
-    "@aws-cdk/aws-lambda": "^1.12.0",
-    "@aws-cdk/aws-logs": "^1.12.0",
-    "@aws-cdk/aws-s3": "^1.12.0",
-    "@aws-cdk/aws-sqs": "^1.12.0",
-    "@aws-cdk/aws-ssm": "^1.12.0",
-    "@aws-cdk/core": "^1.12.0",
+    "@aws-cdk/aws-apigateway": "^1.23.0",
+    "@aws-cdk/aws-codebuild": "^1.23.0",
+    "@aws-cdk/aws-codepipeline": "^1.23.0",
+    "@aws-cdk/aws-iam": "^1.23.0",
+    "@aws-cdk/aws-lambda": "^1.23.0",
+    "@aws-cdk/aws-logs": "^1.23.0",
+    "@aws-cdk/aws-s3": "^1.23.0",
+    "@aws-cdk/aws-sqs": "^1.23.0",
+    "@aws-cdk/aws-ssm": "^1.23.0",
+    "@aws-cdk/core": "^1.23.0",
     "@bifravst/code-style": "^4.0.2",
-    "@coderbyheart/bdd-feature-runner-aws": "^9.0.0",
-    "@commitlint/cli": "^8.2.0",
-    "@commitlint/config-angular": "^8.2.0",
-    "@types/node": "^12.7.12",
-    "aws-cdk": "^1.12.0",
-    "husky": "^3.0.8"
+    "@coderbyheart/bdd-feature-runner-aws": "^9.2.3",
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-angular": "^8.3.4",
+    "@types/node": "^13.7.1",
+    "aws-cdk": "^1.23.0",
+    "husky": "^4.2.3"
   },
   "husky": {
     "hooks": {
@@ -57,12 +57,10 @@
   "lint-staged": {
     "*.ts": [
       "prettier --write",
-      "eslint --ext .js,.ts",
-      "git add"
+      "eslint --ext .js,.ts"
     ],
     "*.{md,json,yaml,yml,js}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "release": {
