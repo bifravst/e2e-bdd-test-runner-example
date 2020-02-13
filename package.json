@@ -40,7 +40,7 @@
     "@aws-cdk/aws-sqs": "^1.23.0",
     "@aws-cdk/aws-ssm": "^1.23.0",
     "@aws-cdk/core": "^1.23.0",
-    "@bifravst/code-style": "^4.0.2",
+    "@bifravst/code-style": "^6.0.4",
     "@coderbyheart/bdd-feature-runner-aws": "^9.2.3",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-angular": "^8.3.4",
