@@ -41,7 +41,7 @@
     "@aws-cdk/aws-ssm": "^1.23.0",
     "@aws-cdk/core": "^1.23.0",
     "@bifravst/code-style": "^6.0.4",
-    "@coderbyheart/bdd-feature-runner-aws": "^9.2.3",
+    "@coderbyheart/bdd-feature-runner-aws": "^9.2.4",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-angular": "^8.3.4",
     "@types/node": "^13.7.1",
