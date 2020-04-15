@@ -8,6 +8,7 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: eu-central-1
   STACK_BASE_NAME: bddfrawsx-${{ github.sha }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 jobs:
   tests:
@@ -26,6 +27,9 @@ jobs:
       - name: Authenticate with GitHub registry
         run: |
           echo "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN" > ~/.npmrc
+      - name: Authenticate with NPM registry
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN" >> ~/.npmrc
       - name: Install dependencies
         run: npm ci --no-audit
       - name: Build
