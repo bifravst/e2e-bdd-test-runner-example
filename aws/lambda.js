@@ -1,8 +1,8 @@
 const { SQS } = require('aws-sdk')
 const sqs = new SQS()
-exports.handler = event => {
+exports.handler = (event) => {
 	const MessageAttributes = Object.keys(event.headers || {})
-		.filter(key => !/^(CloudFront-|X-|Host|Via)/.test(key))
+		.filter((key) => !/^(CloudFront-|X-|Host|Via)/.test(key))
 		.slice(0, 10) // max number of MessageAttributes is 10
 		.reduce((hdrs, key) => {
 			hdrs[key] = {
