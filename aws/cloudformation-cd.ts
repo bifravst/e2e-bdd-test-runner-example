@@ -8,7 +8,7 @@ const pjson = JSON.parse(
 	readFileSync(path.join(__dirname, '..', '..', 'package.json'), 'utf-8'),
 )
 const repoUrl = parse(pjson.homepage)
-if (!repoUrl.path) {
+if (repoUrl.path === undefined || repoUrl.path === null) {
 	throw new Error(
 		`Failed to detect repository to watch from package.json:homepage: ${pjson.homepage}`,
 	)

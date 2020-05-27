@@ -8,8 +8,7 @@ import {
 import { stackBaseName } from '../aws/stackBaseName'
 import * as path from 'path'
 
-const region =
-	process.env.AWS_DEFAULT_REGION || process.env.AWS_REGION || 'eu-central-1'
+const region = process.env.AWS_REGION ?? 'eu-central-1'
 
 /**
  * This file configures the BDD Feature runner
@@ -20,7 +19,6 @@ const region =
 
 export type World = {
 	webhookReceiver: string
-	webhookQueue: string
 }
 
 const runFeatures = async () => {
@@ -31,7 +29,6 @@ const runFeatures = async () => {
 	const runner = new FeatureRunner<World>(
 		{
 			webhookReceiver: config.ApiURL,
-			webhookQueue: config.QueueURL,
 		},
 		{
 			dir: path.resolve(process.cwd(), 'features'),
@@ -47,7 +44,7 @@ const runFeatures = async () => {
 	return runner
 		.addStepRunners(restStepRunners())
 		.addStepRunners(
-			webhookStepRunners<World>({ region }),
+			webhookStepRunners({ region, webhookQueue: config.QueueURL }),
 		)
 		.run()
 }
