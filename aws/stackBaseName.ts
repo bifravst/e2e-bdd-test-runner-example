@@ -3,4 +3,4 @@
  * stacks.
  */
 export const stackBaseName = (): string =>
-	process.env.STACK_BASE_NAME ?? 'bdd-feature-runner-aws-example'
+	process.env.STACK_BASE_NAME ?? 'e2e-bdd-test-runner-example'

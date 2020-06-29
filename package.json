@@ -1,7 +1,7 @@
 {
   "name": "@bifravst/e2e-bdd-test-runner-example",
   "version": "0.0.0-development",
-  "description": "Example use of @nRFCloud/bdd-feature-runner-aws",
+  "description": "Example use of @bifravst/e2e-bdd-test-runner",
   "main": "index.js",
   "scripts": {
     "test": "node dist/feature-runner/run-features.js",
