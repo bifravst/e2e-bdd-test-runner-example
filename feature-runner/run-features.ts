@@ -4,7 +4,7 @@ import {
 	webhookStepRunners,
 	fetchStackConfiguration,
 	ConsoleReporter,
-} from '@coderbyheart/bdd-feature-runner-aws'
+} from '@bifravst/e2e-bdd-test-runner'
 import { stackBaseName } from '../aws/stackBaseName'
 import * as path from 'path'
 
