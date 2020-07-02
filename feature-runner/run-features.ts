@@ -2,11 +2,12 @@ import {
 	FeatureRunner,
 	restStepRunners,
 	webhookStepRunners,
-	fetchStackConfiguration,
 	ConsoleReporter,
 } from '@bifravst/e2e-bdd-test-runner'
+import { stackOutput } from '@bifravst/cloudformation-helpers'
 import { stackBaseName } from '../aws/stackBaseName'
 import * as path from 'path'
+import { CloudFormation } from 'aws-sdk'
 
 const region = process.env.AWS_REGION ?? 'eu-central-1'
 
@@ -22,10 +23,10 @@ export type World = {
 }
 
 const runFeatures = async () => {
-	const config = await fetchStackConfiguration({
-		StackName: `${stackBaseName()}-test`,
-		region,
-	})
+	const config = await stackOutput(new CloudFormation({ region }))<{
+		ApiURL: string
+		QueueURL: string
+	}>(`${stackBaseName()}-test`)
 	const runner = new FeatureRunner<World>(
 		{
 			webhookReceiver: config.ApiURL,
