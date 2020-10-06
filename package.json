@@ -41,7 +41,7 @@
     "@aws-cdk/aws-ssm": "1.66.0",
     "@aws-cdk/core": "1.66.0",
     "@bifravst/cloudformation-helpers": "3.1.49",
-    "@bifravst/code-style": "8.0.120",
+    "@bifravst/code-style": "8.0.121",
     "@bifravst/e2e-bdd-test-runner": "3.2.4",
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-angular": "11.0.0",
