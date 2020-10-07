@@ -16,7 +16,7 @@ if (repoUrl.path === undefined || repoUrl.path === null) {
 const Owner = repoUrl.path.split('/')[1]
 const Repo = repoUrl.path.split('/')[2]
 new CDApp({
-	stackId: `${stackBaseName()}-cd`,
+	stackName: `${stackBaseName()}-cd`,
 	repoToWatch: {
 		Owner,
 		Repo,

@@ -3,10 +3,10 @@ import { CDStack } from './CDStack'
 
 export class CDApp extends CDK.App {
 	public constructor({
-		stackId,
+		stackName,
 		repoToWatch: { Owner, Repo, Branch },
 	}: {
-		stackId: string
+		stackName: string
 		repoToWatch: {
 			Repo: string
 			Owner: string
@@ -15,7 +15,7 @@ export class CDApp extends CDK.App {
 	}) {
 		super()
 
-		new CDStack(this, stackId, {
+		new CDStack(this, stackName, {
 			Owner,
 			Repo,
 			Branch,
