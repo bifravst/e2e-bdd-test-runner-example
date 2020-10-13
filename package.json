@@ -43,7 +43,7 @@
     "@bifravst/cloudformation-helpers": "3.1.54",
     "@bifravst/code-style": "8.0.134",
     "@bifravst/e2e-bdd-test-runner": "3.2.9",
-    "@bifravst/eslint-config-typescript": "5.0.65",
+    "@bifravst/eslint-config-typescript": "5.0.66",
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-angular": "11.0.0",
     "@types/node": "14.11.8",
