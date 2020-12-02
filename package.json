@@ -42,7 +42,7 @@
     "@aws-cdk/core": "1.76.0",
     "@bifravst/cloudformation-helpers": "4.0.16",
     "@bifravst/code-style": "8.0.134",
-    "@bifravst/e2e-bdd-test-runner": "4.0.31",
+    "@bifravst/e2e-bdd-test-runner": "4.0.32",
     "@bifravst/eslint-config-typescript": "5.0.79",
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-angular": "11.0.0",
