@@ -46,7 +46,7 @@
     "@bifravst/eslint-config-typescript": "5.0.84",
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-angular": "11.0.0",
-    "@types/node": "14.14.14",
+    "@types/node": "14.14.16",
     "aws-cdk": "1.80.0",
     "aws-sdk": "2.817.0",
     "eslint": "7.16.0",
