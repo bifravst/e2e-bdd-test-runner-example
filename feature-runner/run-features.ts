@@ -7,7 +7,7 @@ import {
 import { stackOutput } from '@bifravst/cloudformation-helpers'
 import { stackBaseName } from '../aws/stackBaseName'
 import * as path from 'path'
-import { CloudFormation } from 'aws-sdk'
+import { CloudFormationClient } from '@aws-sdk/client-cloudformation'
 
 const region = process.env.AWS_REGION ?? 'eu-central-1'
 
@@ -23,7 +23,7 @@ export type World = {
 }
 
 const runFeatures = async () => {
-	const config = await stackOutput(new CloudFormation({ region }))<{
+	const config = await stackOutput(new CloudFormationClient({ region }))<{
 		ApiURL: string
 		QueueURL: string
 	}>(`${stackBaseName()}-test`)

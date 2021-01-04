@@ -8,8 +8,7 @@
     "prettier": "prettier --write \"./**/*.{ts,js,json}\"",
     "prettier:lint": "prettier --list-different \"./**/*.{ts,js,json}\"",
     "lint": "npm run tslint && npm run prettier:lint",
-    "tslint": "eslint --ext .js,.ts \"./{feature-runner,aws}/*.ts\"",
-    "postinstall": "npx tsc"
+    "tslint": "eslint --ext .js,.ts \"./{feature-runner,aws}/*.ts\""
   },
   "repository": {
     "type": "git",
@@ -40,15 +39,15 @@
     "@aws-cdk/aws-sqs": "1.82.0",
     "@aws-cdk/aws-ssm": "1.82.0",
     "@aws-cdk/core": "1.82.0",
-    "@bifravst/cloudformation-helpers": "4.0.34",
+    "@aws-sdk/client-cloudformation": "3.1.0",
+    "@bifravst/cloudformation-helpers": "5.0.0",
     "@bifravst/code-style": "8.0.134",
-    "@bifravst/e2e-bdd-test-runner": "4.0.53",
+    "@bifravst/e2e-bdd-test-runner": "5.0.0",
     "@bifravst/eslint-config-typescript": "5.0.86",
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-angular": "11.0.0",
     "@types/node": "14.14.20",
     "aws-cdk": "1.82.0",
-    "aws-sdk": "2.821.0",
     "eslint": "7.17.0",
     "husky": "4.3.6",
     "lint-staged": "10.5.3",
