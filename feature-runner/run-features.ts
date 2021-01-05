@@ -9,8 +9,6 @@ import { stackBaseName } from '../aws/stackBaseName'
 import * as path from 'path'
 import { CloudFormationClient } from '@aws-sdk/client-cloudformation'
 
-const region = process.env.AWS_REGION ?? 'eu-central-1'
-
 /**
  * This file configures the BDD Feature runner
  * by loading the configuration for the test resources
@@ -23,7 +21,7 @@ export type World = {
 }
 
 const runFeatures = async () => {
-	const config = await stackOutput(new CloudFormationClient({ region }))<{
+	const config = await stackOutput(new CloudFormationClient({}))<{
 		ApiURL: string
 		QueueURL: string
 	}>(`${stackBaseName()}-test`)
@@ -44,9 +42,7 @@ const runFeatures = async () => {
 
 	return runner
 		.addStepRunners(restStepRunners())
-		.addStepRunners(
-			webhookStepRunners({ region, webhookQueue: config.QueueURL }),
-		)
+		.addStepRunners(webhookStepRunners({ webhookQueue: config.QueueURL }))
 		.run()
 }
 
