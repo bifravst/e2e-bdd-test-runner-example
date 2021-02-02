@@ -1,3 +1,6 @@
+> **:truck: moved to https://github.com/NordicSemiconductor/cloud-e2e-bdd-test-runner-example-js**  
+> :information_source: [more info](https://github.com/bifravst/bifravst/issues/56)
+
 # BDD Feature Runner for AWS Examples
 
 [![GitHub Actions](https://github.com/bifravst/e2e-bdd-test-runner-example/workflows/Test%20and%20Release/badge.svg)](https://github.com/bifravst/e2e-bdd-test-runner-example/actions)
